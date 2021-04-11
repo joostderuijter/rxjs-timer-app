@@ -1,0 +1,12 @@
+.timer {
+  display: flex;
+  flex-direction: column;
+}
+
+.timer__time {
+  font-size: 2.0em;
+}
+
+.timer__controls {
+  display:flex;
+}
