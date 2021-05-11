@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {fromEvent, interval, merge, Observable} from 'rxjs';
-import {exhaustMap, map, mapTo, scan, startWith, takeUntil} from 'rxjs/operators';
+import {exhaustMap, mapTo, scan, startWith, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timer',
