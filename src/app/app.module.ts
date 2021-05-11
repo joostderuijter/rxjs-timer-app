@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { TimerComponent } from './timer/timer.component';
+import {DisplayAsTimePipe} from './pipes/displayAsTime';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TimerComponent
-  ],
+    declarations: [
+        AppComponent,
+        TimerComponent,
+        DisplayAsTimePipe
+    ],
   imports: [
     BrowserModule
   ],

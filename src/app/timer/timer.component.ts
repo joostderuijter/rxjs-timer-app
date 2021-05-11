@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, fromEvent, interval, Observable, pipe} from 'rxjs';
-import {exhaustMap, map, mergeMap, scan, skip, skipUntil, takeUntil, tap, withLatestFrom} from 'rxjs/operators';
+import {fromEvent, interval, merge, Observable} from 'rxjs';
+import {exhaustMap, map, mapTo, scan, startWith, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timer',
@@ -9,29 +9,28 @@ import {exhaustMap, map, mergeMap, scan, skip, skipUntil, takeUntil, tap, withLa
 })
 export class TimerComponent implements OnInit {
 
-  public timer$ = new BehaviorSubject<number>(0);
-
   constructor() { }
+
+  timer$: Observable<any> = new Observable<any>();
 
   ngOnInit(): void {
     const start$ = fromEvent(document.getElementById('start-btn'), 'click');
     const pause$ = fromEvent(document.getElementById('pause-btn'), 'click');
     const reset$ = fromEvent(document.getElementById('reset-btn'), 'click');
 
-    start$.pipe(
-      exhaustMap(() => interval(100).pipe(
+    this.timer$ = merge(
+      start$.pipe(
+        exhaustMap(() => interval(100).pipe(
           takeUntil(pause$),
-          withLatestFrom(this.timer$),
-          map(([first, second]) => second),
-          scan(((acc) => acc + 1)),
+          mapTo(1)
+          )
         )
       ),
-      tap((val) => this.timer$.next(val))
-    ).subscribe(console.log);
-
-    reset$.pipe(
-      map(() => 0),
-      tap((val) => this.timer$.next(val))
-    ).subscribe();
+      reset$.pipe(
+        mapTo(false)
+      )).pipe(
+        startWith(0),
+        scan((acc, value) => !value ? 0 : acc += value),
+    );
   }
 }
