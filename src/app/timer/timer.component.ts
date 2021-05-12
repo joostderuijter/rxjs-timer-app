@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {fromEvent, interval, merge, Observable} from 'rxjs';
-import {exhaustMap, mapTo, scan, startWith, takeUntil} from 'rxjs/operators';
+import {exhaustMap, mapTo, scan, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timer',
@@ -9,7 +9,8 @@ import {exhaustMap, mapTo, scan, startWith, takeUntil} from 'rxjs/operators';
 })
 export class TimerComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   timer$: Observable<any> = new Observable<any>();
 
@@ -20,7 +21,7 @@ export class TimerComponent implements OnInit {
 
     this.timer$ = merge(
       start$.pipe(
-        exhaustMap(() => interval(100).pipe(
+        exhaustMap(() => interval(1000).pipe(
           takeUntil(pause$),
           mapTo(1)
           )
@@ -28,9 +29,9 @@ export class TimerComponent implements OnInit {
       ),
       reset$.pipe(
         mapTo(false)
-      )).pipe(
-        startWith(0),
-        scan((acc, value) => !value ? 0 : acc += value),
+      )
+    ).pipe(
+      scan((acc, value) => !value ? 0 : acc += value),
     );
   }
 }
