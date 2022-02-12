@@ -1,5 +1,5 @@
 # A simple RxJS timer
-See the following blog post for more information: https://joostderuijter.com/posts/preserving-observable-state-upon-completion/ 💻
+See the following blog post for more information: https://joost.im/rxjs-preserve-observable-state-after-completion/ 💻
 
 ## Development server
 
